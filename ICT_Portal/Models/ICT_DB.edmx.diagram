@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f4b32eee31ce42d691b814399a7a9422" Name="Diagram1" ZoomLevel="57">
+        <EntityTypeShape EntityType="ICTDBLiveModel.Assessment" Width="1.5" PointX="6" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Attendence" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Batch" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Course" Width="1.5" PointX="3" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Department" Width="1.5" PointX="3" PointY="30.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Enrollment" Width="1.5" PointX="5.25" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Instructor" Width="1.5" PointX="8.25" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.InstructorCours" Width="1.5" PointX="10.5" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Section" Width="1.5" PointX="3" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Student" Width="1.5" PointX="3" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.User" Width="1.5" PointX="0.75" PointY="18.25" IsExpanded="true" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Assessment_Enrollment" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Assessment_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Assessment_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Attendence_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Attendence_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Batch_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_Batch" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Course_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_StudentCourses_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Department_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Instructor_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_Section" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_StudentCourses_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Instructor_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_InstructorCourses_Instructor" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_InstructorCourses_Section" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_InstructorCourses_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Section_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Student_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
