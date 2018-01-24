@@ -28,28 +28,27 @@ namespace ICT_Portal.Controllers
                     int? batch = bid;
                     int? course = cid;
                     int? section = sid;
-                        var enrollments = db.Enrollments
-                           .Include(e => e.Batch)
-                           .Include(e => e.Course)
-                           .Include(e => e.Section)
-                           .Include(e => e.Student)
-                           .Include(e => e.User)
-                           .Where(m => m.BatchID == batch
-                                  && m.CourseID == course
-                                  && m.SectionID == section
-                                  );
-                        return View(enrollments.ToList());                                       
-                    return View();
-                    }
+                    var enrollments = db.Enrollments
+                       .Include(e => e.Batch)
+                       .Include(e => e.Course)
+                       .Include(e => e.Section)
+                       .Include(e => e.Student)
+                       .Include(e => e.User)
+                       .Where(m => m.BatchID == batch
+                              && m.CourseID == course
+                              && m.SectionID == section
+                              );
+                    return View(enrollments.ToList());
                 }
-                //var allEnrollments = db.Enrollments
-                //   .Include(e => e.Batch)
-                //   .Include(e => e.Course)
-                //   .Include(e => e.Section)
-                //   .Include(e => e.Student)
-                //   .Include(e => e.User);
-                //return View(allEnrollments.ToList());
             }
+            //var allEnrollments = db.Enrollments
+            //   .Include(e => e.Batch)
+            //   .Include(e => e.Course)
+            //   .Include(e => e.Section)
+            //   .Include(e => e.Student)
+            //   .Include(e => e.User);
+            //return View(allEnrollments.ToList());
+
             else if (Session["utype"].ToString().ToLower() == "admin")
             {
                 var enrollments = db.Enrollments
