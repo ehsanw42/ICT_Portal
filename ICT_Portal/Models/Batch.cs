@@ -17,6 +17,7 @@ namespace ICT_Portal.Models
         public Batch()
         {
             this.Enrollments = new HashSet<Enrollment>();
+            this.InstructorCourses = new HashSet<InstructorCours>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,6 @@ namespace ICT_Portal.Models
     
         public virtual User User { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
+        public virtual ICollection<InstructorCours> InstructorCourses { get; set; }
     }
 }

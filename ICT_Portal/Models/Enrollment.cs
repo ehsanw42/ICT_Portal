@@ -17,13 +17,14 @@ namespace ICT_Portal.Models
         public Enrollment()
         {
             this.Assessments = new HashSet<Assessment>();
+            this.Attendences = new HashSet<Attendence>();
         }
     
         public int ID { get; set; }
-        public Nullable<int> sectionID { get; set; }
-        public Nullable<int> courseID { get; set; }
-        public Nullable<int> batchID { get; set; }
-        public Nullable<int> studentID { get; set; }
+        public Nullable<int> SectionID { get; set; }
+        public Nullable<int> CourseID { get; set; }
+        public Nullable<int> BatchID { get; set; }
+        public Nullable<int> StudentID { get; set; }
         public Nullable<System.DateTime> EnrollmentDate { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
@@ -31,10 +32,11 @@ namespace ICT_Portal.Models
         public Nullable<int> uID { get; set; }
     
         public virtual ICollection<Assessment> Assessments { get; set; }
+        public virtual ICollection<Attendence> Attendences { get; set; }
         public virtual Batch Batch { get; set; }
         public virtual Course Course { get; set; }
         public virtual Section Section { get; set; }
-        public virtual User User { get; set; }
         public virtual Student Student { get; set; }
+        public virtual User User { get; set; }
     }
 }

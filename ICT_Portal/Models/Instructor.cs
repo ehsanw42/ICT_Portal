@@ -11,7 +11,6 @@ namespace ICT_Portal.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Instructor
     {
@@ -28,6 +27,7 @@ namespace ICT_Portal.Models
         public string LastName { get; set; }
         public string FatherName { get; set; }
         public string CNIC { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Gender { get; set; }
         public string Designation { get; set; }
         public Nullable<int> DeptID { get; set; }
@@ -44,19 +44,16 @@ namespace ICT_Portal.Models
         public Nullable<System.DateTime> JoiningDate { get; set; }
         public Nullable<System.DateTime> ResignationDate { get; set; }
         public byte[] Photo { get; set; }
-        [ScaffoldColumn(false)]
         public string Status { get; set; }
-        public string  Username { get; set; }
-        public string Password { get; set; }
-        [ScaffoldColumn(false)]
         public Nullable<System.DateTime> CreatedOn { get; set; }
-        [ScaffoldColumn(false)]
+        public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
     
         public virtual ICollection<Assessment> Assessments { get; set; }
         public virtual ICollection<Attendence> Attendences { get; set; }
         public virtual Department Department { get; set; }
         public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
         public virtual ICollection<InstructorCours> InstructorCourses { get; set; }
     }
 }

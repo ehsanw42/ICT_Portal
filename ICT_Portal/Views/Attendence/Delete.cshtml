@@ -12,14 +12,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.enrollmentID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.enrollmentID)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ClassRoom)
         </dt>
 
@@ -65,6 +57,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.TopicsCovered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Enrollment.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Enrollment.Status)
         </dd>
 
         <dt>

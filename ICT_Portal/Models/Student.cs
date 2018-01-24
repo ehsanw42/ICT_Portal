@@ -24,6 +24,7 @@ namespace ICT_Portal.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FatherName { get; set; }
+        public string MobileNo { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string CNIC { get; set; }
@@ -35,8 +36,11 @@ namespace ICT_Portal.Models
         public string Status { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public byte[] Photo { get; set; }
     
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

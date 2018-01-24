@@ -14,14 +14,52 @@ namespace ICT_Portal.Controllers
     {
         private ICTDBLiveEntities db = new ICTDBLiveEntities();
 
-        // GET: /INstructorCours/
-        public ActionResult Index()
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var instructorcourses = db.InstructorCourses.Include(i => i.Instructor).Include(i => i.Section).Include(i => i.User);
-            return View(instructorcourses.ToList());
+            // Check Session
+            if (Session["utype"] != null)
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            else
+            {
+                // Redirect to Login page if session is null
+                filterContext.Result = new RedirectResult("~/User/Login");
+            }
         }
 
-        // GET: /INstructorCours/Details/5
+        // GET: /InstructorCours/
+        public ActionResult Index()
+        {
+            if (Session["utype"].ToString().ToLower() == "instructor") {
+                int uid = int.Parse(Session["uid"].ToString());
+                var instructorcourses = db.InstructorCourses
+                    .Include(i => i.Batch)
+                    .Include(i => i.Course)
+                    .Include(i => i.Instructor)
+                    .Include(i => i.Section)
+                    .Include(i => i.User)
+                    .Where(m =>m.uID == uid && m.Batch.Status.ToLower() == "active");
+                //Session["batch"] = instructorcourses.SingleOrDefault().BatchID;
+                //Session["section"] = instructorcourses.SingleOrDefault().SectionID;
+                //Session["course"] = instructorcourses.SingleOrDefault().CourseID;
+                return View(instructorcourses.ToList());
+
+            }
+            else if (Session["utype"].ToString().ToLower() == "admin")
+            {
+                var instructorcourses = db.InstructorCourses
+                    .Include(i => i.Batch)
+                    .Include(i => i.Course)
+                    .Include(i => i.Instructor)
+                    .Include(i => i.Section)
+                    .Include(i => i.User);
+                return View(instructorcourses.ToList());
+            }
+            return RedirectToAction("Login", "User");
+        }
+
+        // GET: /InstructorCours/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,21 +74,23 @@ namespace ICT_Portal.Controllers
             return View(instructorcours);
         }
 
-        // GET: /INstructorCours/Create
+        // GET: /InstructorCours/Create
         public ActionResult Create()
         {
-            ViewBag.instructorID = new SelectList(db.Instructors, "ID", "FirstName");
-            ViewBag.sectionID = new SelectList(db.Sections, "ID", "Name");
+            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name");
+            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code");
+            ViewBag.InstructorID = new SelectList(db.Instructors, "ID", "FirstName");
+            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
             return View();
         }
 
-        // POST: /INstructorCours/Create
+        // POST: /InstructorCours/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,sectionID,instructorID,CreatedOn,ModifiedOn,uID")] InstructorCours instructorcours)
+        public ActionResult Create([Bind(Include="ID,SectionID,InstructorID,BatchID,CourseID,CreatedOn,ModifiedOn,uID")] InstructorCours instructorcours)
         {
             if (ModelState.IsValid)
             {
@@ -59,13 +99,15 @@ namespace ICT_Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.instructorID = new SelectList(db.Instructors, "ID", "FirstName", instructorcours.instructorID);
-            ViewBag.sectionID = new SelectList(db.Sections, "ID", "Name", instructorcours.sectionID);
+            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name", instructorcours.BatchID);
+            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code", instructorcours.CourseID);
+            ViewBag.InstructorID = new SelectList(db.Instructors, "ID", "FirstName", instructorcours.InstructorID);
+            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name", instructorcours.SectionID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", instructorcours.uID);
             return View(instructorcours);
         }
 
-        // GET: /INstructorCours/Edit/5
+        // GET: /InstructorCours/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,18 +119,20 @@ namespace ICT_Portal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.instructorID = new SelectList(db.Instructors, "ID", "FirstName", instructorcours.instructorID);
-            ViewBag.sectionID = new SelectList(db.Sections, "ID", "Name", instructorcours.sectionID);
+            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name", instructorcours.BatchID);
+            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code", instructorcours.CourseID);
+            ViewBag.InstructorID = new SelectList(db.Instructors, "ID", "FirstName", instructorcours.InstructorID);
+            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name", instructorcours.SectionID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", instructorcours.uID);
             return View(instructorcours);
         }
 
-        // POST: /INstructorCours/Edit/5
+        // POST: /InstructorCours/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,sectionID,instructorID,CreatedOn,ModifiedOn,uID")] InstructorCours instructorcours)
+        public ActionResult Edit([Bind(Include="ID,SectionID,InstructorID,BatchID,CourseID,CreatedOn,ModifiedOn,uID")] InstructorCours instructorcours)
         {
             if (ModelState.IsValid)
             {
@@ -96,13 +140,15 @@ namespace ICT_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.instructorID = new SelectList(db.Instructors, "ID", "FirstName", instructorcours.instructorID);
-            ViewBag.sectionID = new SelectList(db.Sections, "ID", "Name", instructorcours.sectionID);
+            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name", instructorcours.BatchID);
+            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code", instructorcours.CourseID);
+            ViewBag.InstructorID = new SelectList(db.Instructors, "ID", "FirstName", instructorcours.InstructorID);
+            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name", instructorcours.SectionID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", instructorcours.uID);
             return View(instructorcours);
         }
 
-        // GET: /INstructorCours/Delete/5
+        // GET: /InstructorCours/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -117,7 +163,7 @@ namespace ICT_Portal.Controllers
             return View(instructorcours);
         }
 
-        // POST: /INstructorCours/Delete/5
+        // POST: /InstructorCours/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -26,6 +26,7 @@ namespace ICT_Portal.Models
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public string TopicsCovered { get; set; }
     
+        public virtual Enrollment Enrollment { get; set; }
         public virtual Instructor Instructor { get; set; }
         public virtual User User { get; set; }
     }

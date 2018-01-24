@@ -9,7 +9,8 @@
     <title>Create</title>
 </head>
 <body>
-    @using (Html.BeginForm())
+    @*@using (Html.BeginForm("Login", "User", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))*@
+    @using (Html.BeginForm())    
     {
         @Html.AntiForgeryToken()
 
@@ -21,7 +22,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserName)
+                    @Html.EditorFor(model => model.UserName, new { @value = "ehsan" })
                     @Html.ValidationMessageFor(model => model.UserName)
                 </div>
             </div>
@@ -29,7 +30,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.UPassword, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.UPassword)
+                    @Html.EditorFor(model => model.UPassword, new { @value = "ehsan" })
                     @Html.ValidationMessageFor(model => model.UPassword)
                 </div>
             </div>

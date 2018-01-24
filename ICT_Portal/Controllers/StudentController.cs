@@ -17,7 +17,7 @@ namespace ICT_Portal.Controllers
         // GET: /Student/
         public ActionResult Index()
         {
-            var students = db.Students.Include(s => s.User);
+            var students = db.Students.Include(s => s.User).Include(s => s.User1);
             return View(students.ToList());
         }
 
@@ -40,6 +40,7 @@ namespace ICT_Portal.Controllers
         public ActionResult Create()
         {
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName");
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,uID,FirstName,LastName,FatherName,Email,DateOfBirth,CNIC,Gender,TemporaryAddress,TemporaryCity,PermanentAddress,PermanentCity,Status,CreatedOn,ModifiedOn")] Student student)
+        public ActionResult Create([Bind(Include="ID,uID,FirstName,LastName,FatherName,MobileNo,Email,DateOfBirth,CNIC,Gender,TemporaryAddress,TemporaryCity,PermanentAddress,PermanentCity,Status,CreatedOn,ModifiedOn,ModifiedBy,Photo")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +59,7 @@ namespace ICT_Portal.Controllers
             }
 
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", student.uID);
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", student.ModifiedBy);
             return View(student);
         }
 
@@ -74,6 +76,7 @@ namespace ICT_Portal.Controllers
                 return HttpNotFound();
             }
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", student.uID);
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", student.ModifiedBy);
             return View(student);
         }
 
@@ -82,7 +85,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,Email,DateOfBirth,CNIC,Gender,TemporaryAddress,TemporaryCity,PermanentAddress,PermanentCity,Status,CreatedOn,ModifiedOn")] Student student)
+        public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,MobileNo,Email,DateOfBirth,CNIC,Gender,TemporaryAddress,TemporaryCity,PermanentAddress,PermanentCity,Status,CreatedOn,ModifiedOn,ModifiedBy,Photo")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +94,7 @@ namespace ICT_Portal.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", student.uID);
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", student.ModifiedBy);
             return View(student);
         }
 

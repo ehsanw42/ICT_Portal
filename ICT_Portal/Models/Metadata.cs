@@ -30,9 +30,9 @@ namespace ICT_Portal.Models
 
     public class AssessmentMetadata{
         [ScaffoldColumn(false)]
-        public Nullable<int> UID;
+        public Nullable<int> uID;
         [ScaffoldColumn(false)]
-        public Nullable<int> EnrollmentID;
+        public Nullable<int> enrollmentID;
         [Display(Name = "Assignment 1 Max Marks")]
         public Nullable<int> A1_Max;
         [Display(Name = "Assignment 1 Obtained Marks")]
@@ -167,6 +167,8 @@ namespace ICT_Portal.Models
         public string FatherName;
         [RegularExpression("^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$",ErrorMessage = "Enter Valid CNIC")]
         public string CNIC;
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
         [EnumDataType(typeof(Designation))]
         public string Designation;
         [Display(Name = "Department")]
@@ -203,15 +205,10 @@ namespace ICT_Portal.Models
         [DataType(DataType.Upload)]
         public byte[] Photo;
         [ScaffoldColumn(false)]
+        public Nullable<int> ModifiedBy;
+        [ScaffoldColumn(false)]
         public string Status;
-        [NotMapped]
-        [Required(ErrorMessage = "Please Specify Username")]
-        [Display(Name = "User Name")]
-        public string Username { get; set; }
-        [NotMapped]
-        [Required(ErrorMessage = "Please Specify Password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> CreatedOn;
         [ScaffoldColumn(false)]
@@ -221,14 +218,18 @@ namespace ICT_Portal.Models
     public class InstructorCoursMetadata
     {        
         [Display(Name = "Section")]
-        public int sectionID;
+        public int SectionID;
         [Display(Name = "Instructor")]
-        public Nullable<int> instructorID;
+        public Nullable<int> InstructorID;
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> CreatedOn;
+        [Display(Name = "Batch")]
+        public Nullable<int> BatchID { get; set; }
+        [Display(Name = "Course")]
+        public Nullable<int> CourseID { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> ModifiedOn;
-        [ScaffoldColumn(false)]
+        [Display(Name = "User Name" )]
         public Nullable<int> uID;
     }
 
@@ -257,9 +258,11 @@ namespace ICT_Portal.Models
         public string FatherName;
         [EmailAddress]
         public string Email;
+        [RegularExpression("^+92-3[0-9+]{2}-[0-9+]{7}$", ErrorMessage = "Enter a Valid Mobile Number sa +92-300-0000000")]
+        public string MobileNo;
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> DateOfBirth;
-        [RegularExpression("^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "Enter a Valid CNIC")]
+        [RegularExpression("^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "Enter a Valid CNIC as 00000-0000000-0")]
         public string CNIC;
         public string Gender;
         [Display(Name = "Temporary Address")]
@@ -272,6 +275,10 @@ namespace ICT_Portal.Models
         public string PermanentCity;
         [ScaffoldColumn(false)]
         public string Status;
+        [DataType(DataType.Upload)]
+        public byte[] Photo;
+        [ScaffoldColumn(false)]
+        public Nullable<int> ModifiedBy { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> CreatedOn;
         [ScaffoldColumn(false)]

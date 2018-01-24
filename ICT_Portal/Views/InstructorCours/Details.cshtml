@@ -1,64 +1,58 @@
 ﻿@model ICT_Portal.Models.InstructorCours
 
+@{
+    ViewBag.Title = "Details";
+}
 
+<h2>Details</h2>
 
-<!DOCTYPE html>
+<div>
+    <h4>InstructorCours</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Batch.Name)
+        </dt>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>InstructorCours</h4>
-    	<hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedOn)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedOn)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ModifiedOn)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Instructor.FirstName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Instructor.FirstName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Section.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Section.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.User.UserName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.User.UserName)
-            </dd>
-    
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+        <dd>
+            @Html.DisplayFor(model => model.Batch.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Instructor.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Instructor.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Section.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Section.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -35,15 +35,12 @@ namespace ICT_Portal.Controllers
             return View(user);
         }
 
-        // GET: /User/Login
+        //GET: /User/Login
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: /User/Login
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(User user)
@@ -53,36 +50,36 @@ namespace ICT_Portal.Controllers
                 User usr = db.Users.FirstOrDefault(x => x.UPassword == user.UPassword && x.UserName.ToLower() == user.UserName.ToLower());
                 if (usr == null)
                 {
-                    ModelState.AddModelError("","Invalid Username or Password");
+                    ModelState.AddModelError("","Invalid Username or Password");                    
                     return View();
-                    //return RedirectToAction("Login", "User");
                 }
+
                 Session["uid"] = usr.UID;
                 Session["utype"] = usr.Role;
-                if (usr.Role == "Admin")
+                if(usr.Role == "Admin")
                 {
                     Session["username"] = usr.UserName;
+                    //return Redirect(returnUrl);
                     return RedirectToAction("Index", "User");
                 }
                 else if (usr.Role == "Instructor")
                 {
                     Session["username"] = db.Instructors.FirstOrDefault(x => x.uID == usr.UID).FirstName;
+                    //return Redirect(returnUrl);
                     return RedirectToAction("Details", "Instructor");
                 }
                 else if (usr.Role == "Student")
                 {
                     Session["username"] = db.Students.FirstOrDefault(x => x.uID == usr.UID).FirstName;
+                    //return Redirect(returnUrl);
                     return RedirectToAction("Index", "Student");
                 }
-                //db.Users.Add(user);
-                //db.SaveChanges();
             }
-
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult LogOff()
+        public ActionResult Logoff()
         {
             Session.Abandon();
             return RedirectToAction("Login");
@@ -128,26 +125,26 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UID,UserName,UPassword,RePassword,RePassword2")] User user)
+        public ActionResult Edit([Bind(Include="UID,UserName,UPassword,RePassword,RePassword2")] User user)
         {
             if (ModelState.IsValid)
             {
-                // Update password if Current Password matches with the database
+                //Update Password if Current and New Password are Same
                 User obj = db.Users.Where(x => x.UPassword == user.UPassword).SingleOrDefault();
+
+                //Do Not Update Database id Current and New Password are Same
                 if (obj != null)
                 {
-                    // Do not update database if Current and New Password are same
-                    if (user.UPassword != user.RePassword)
+                    if (obj.UPassword != user.RePassword)
                     {
                         obj.UPassword = user.RePassword;
                         db.SaveChanges();
                     }
-                    ViewBag.Success = "Password Updated Successfully!";
+                    ViewBag.Success = "Password Updated Successfully";
                     return View(user);
                 }
-                ViewBag.Error = "Current Password is Incorrect!";
+                ViewBag.Error = "Current Pasword is Incorrect";                
             }
-
             return View(user);
         }
 

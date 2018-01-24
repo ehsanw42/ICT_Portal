@@ -49,12 +49,20 @@ namespace ICT_Portal.Models
         }
 
         [MetadataType(typeof(InstructorMetadate))]
-        public partial class Intructor
+        public partial class Instructor
         {
+            [NotMapped]
+            [Required(ErrorMessage = "Please Specify Username")]
+            [Display(Name = "User Name")]
+            public string Username { get; set; }
+            [NotMapped]
+            [Required(ErrorMessage = "Please Specify Password")]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
         }
 
         [MetadataType(typeof(InstructorCoursMetadata))]
-        public partial class IntructorCours
+        public partial class InstructorCours
         {
         }
 

@@ -18,27 +18,27 @@ namespace ICT_Portal.Models
         public Nullable<int> uID { get; set; }
         public Nullable<int> enrollmentID { get; set; }
         public Nullable<int> A1_Max { get; set; }
-        public Nullable<decimal> A1_Obt { get; set; }
+        public Nullable<double> A1_Obt { get; set; }
         public Nullable<int> A2_Max { get; set; }
-        public Nullable<decimal> A2_Obt { get; set; }
+        public Nullable<double> A2_Obt { get; set; }
         public Nullable<int> A3_Max { get; set; }
-        public Nullable<decimal> A3_Obt { get; set; }
+        public Nullable<double> A3_Obt { get; set; }
         public Nullable<int> A4_Max { get; set; }
-        public Nullable<decimal> A4_Obt { get; set; }
+        public Nullable<double> A4_Obt { get; set; }
         public Nullable<int> A5_Max { get; set; }
-        public Nullable<decimal> A5_Obt { get; set; }
+        public Nullable<double> A5_Obt { get; set; }
         public Nullable<int> Q1_Max { get; set; }
-        public Nullable<decimal> Q1_Obt { get; set; }
+        public Nullable<double> Q1_Obt { get; set; }
         public Nullable<int> Q2_Max { get; set; }
-        public Nullable<decimal> Q2_Obt { get; set; }
+        public Nullable<double> Q2_Obt { get; set; }
         public Nullable<int> Q3_Max { get; set; }
-        public Nullable<decimal> Q3_Obt { get; set; }
+        public Nullable<double> Q3_Obt { get; set; }
         public Nullable<int> Mid_Max { get; set; }
-        public Nullable<decimal> Mid_Obt { get; set; }
+        public Nullable<double> Mid_Obt { get; set; }
         public Nullable<int> SendUp_Max { get; set; }
-        public Nullable<decimal> SendUp_Obt { get; set; }
+        public Nullable<double> SendUp_Obt { get; set; }
         public Nullable<int> Final_Max { get; set; }
-        public Nullable<decimal> Final_Obt { get; set; }
+        public Nullable<double> Final_Obt { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
     

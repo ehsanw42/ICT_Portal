@@ -10,11 +10,9 @@ using ICT_Portal.Models;
 
 namespace ICT_Portal.Controllers
 {
-    [SessionState(System.Web.SessionState.SessionStateBehavior.ReadOnly)]
     public class InstructorController : Controller
     {
         private ICTDBLiveEntities db = new ICTDBLiveEntities();
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             // Check Session
@@ -29,14 +27,15 @@ namespace ICT_Portal.Controllers
             }
         }
 
+
         // GET: /Instructor/
         public ActionResult Index()
         {
             if (Session["utype"].ToString().ToLower() == "instructor")
             {
-               return RedirectToAction("Details");
+                return RedirectToAction("Details");
             }
-            var instructors = db.Instructors.Include(i => i.Department).Include(i => i.User);
+            var instructors = db.Instructors.Include(i => i.Department).Include(i => i.User).Include(i => i.User1);
             return View(instructors.ToList());
         }
 
@@ -44,37 +43,27 @@ namespace ICT_Portal.Controllers
         public ActionResult Details(int? id)
         {
             Instructor instructor = null;
-            //try
-            //{
-                //string uids = Session["uid"].ToString();
-                if (Session["utype"].ToString().ToLower() == "instructor")
-                {
-                    int uid = Convert.ToInt32(Session["uid"].ToString());
-                    instructor = db.Instructors.FirstOrDefault(x => x.uID == uid);
-                  //  instructor = db.Instructors.Find(uid);
-                    if (instructor != null)
-                        return View(instructor);
-                }
-                else if (Session["utype"].ToString().ToLower() == "admin")
-                {
-                    instructor = db.Instructors.Find(id);
-                    if (instructor != null)
-                        return View(instructor);
-                }
-            //}
-            //catch { }
-              
+            if (Session["utype"].ToString().ToLower() == "instructor"){
+                int uid = int.Parse(Session["uid"].ToString());
+                instructor = db.Instructors.FirstOrDefault(x => x.uID == uid);
+                if (instructor != null)
+                    return View(instructor);
+            }
+            else if (Session["utype"].ToString().ToLower() == "admin")
+            {
+                instructor = db.Instructors.Find(id);
+                if (instructor != null)
+                    return View(instructor);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            
             if (instructor == null)
             {
                 return HttpNotFound();
             }
-
-            
             return View(instructor);
         }
 
@@ -83,6 +72,7 @@ namespace ICT_Portal.Controllers
         {
             ViewBag.DeptID = new SelectList(db.Departments, "ID", "Name");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName");
             return View();
         }
 
@@ -91,7 +81,8 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,ResignationDate,Photo,Status,Username,Password,CreatedOn,ModifiedOn")] Instructor instructor)
+        //public ActionResult Create([Bind(Include = "ID,uID,FirstName,LastName,FatherName,CNIC,DateOfBirth,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,ResignationDate,Photo,Status,CreatedOn,ModifiedBy,ModifiedOn")] Instructor instructor, HttpPostedFileBase image)
+        public ActionResult Create(Instructor instructor, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -99,10 +90,16 @@ namespace ICT_Portal.Controllers
                 usr.UserName = instructor.Username;
                 usr.UPassword = instructor.Password;
                 usr.Role = SessionRole.Instructor.ToString();
-                usr.Status = Status.Active.ToString();
+                usr.Status = Status.Active.ToString();               
                 db.Users.Add(usr);
                 db.SaveChanges();
+
                 instructor.uID = usr.UID;
+                if (image != null)
+                {
+                    instructor.Photo = new byte[image.ContentLength];
+                    image.InputStream.Read(instructor.Photo, 0, image.ContentLength);
+                }
                 db.Instructors.Add(instructor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -110,6 +107,7 @@ namespace ICT_Portal.Controllers
 
             ViewBag.DeptID = new SelectList(db.Departments, "ID", "Name", instructor.DeptID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", instructor.uID);
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", instructor.ModifiedBy);
             return View(instructor);
         }
 
@@ -122,14 +120,15 @@ namespace ICT_Portal.Controllers
             }
 
             Instructor ins = null;
-            if(Session["utype"].ToString().ToLower() == "instructor")
+            if (Session["utype"].ToString().ToLower() == "instructor")
             {
-                int uid = Convert.ToInt32(Session["uid"].ToString());
+                int uid = int.Parse(Session["uid"].ToString());
                 ins = db.Instructors.FirstOrDefault(x => x.uID == uid);
                 if (ins != null)
                 {
                     ViewBag.uID = new SelectList(db.Users, "UID", "UserName", ins.uID);
                     ViewBag.DeptID = new SelectList(db.Departments, "ID", "Name", ins.DeptID);
+                    ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", ins.ModifiedBy);
                     return View(ins);
                 }
             }
@@ -140,14 +139,15 @@ namespace ICT_Portal.Controllers
                 {
                     ViewBag.DeptID = new SelectList(db.Departments, "ID", "Name", ins.DeptID);
                     ViewBag.uID = new SelectList(db.Users, "UID", "UserName", ins.uID);
+                    ViewBag.ModifyBy = new SelectList(db.Users, "UID" , "UserName" , ins.ModifiedBy);
                     return View(ins);
                 }
                 else if (ins == null)
                 {
                     return HttpNotFound();
                 }
-            
             }
+
             Instructor instructor = db.Instructors.Find(id);
             return View(instructor);
         }
@@ -157,16 +157,23 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,ResignationDate,Photo,Status,CreatedOn,ModifiedOn")] Instructor instructor)
+        //public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,DateOfBirth,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,ResignationDate,Photo,Status,CreatedOn,ModifiedBy,ModifiedOn")] Instructor instructor, HttpPostedFileBase image)
+        public ActionResult Edit(Instructor instructor, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    instructor.Photo = new byte[image.ContentLength];
+                    image.InputStream.Read(instructor.Photo, 0, image.ContentLength);
+                }
                 db.Entry(instructor).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             ViewBag.DeptID = new SelectList(db.Departments, "ID", "Name", instructor.DeptID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", instructor.uID);
+            ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", instructor.ModifiedBy);
             return View(instructor);
         }
 

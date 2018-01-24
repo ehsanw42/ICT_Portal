@@ -14,21 +14,54 @@ namespace ICT_Portal.Controllers
     {
         private ICTDBLiveEntities db = new ICTDBLiveEntities();
 
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            // Check Session
+            if (Session["utype"] != null)
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            else
+            {
+                // Redirect to Login page if session is null
+                filterContext.Result = new RedirectResult("~/User/Login");
+            }
+        }
+
         // GET: /Attendence/
         public ActionResult Index()
         {
-            var attendences = db.Attendences.Include(a => a.Instructor).Include(a => a.User);
+            if (Session["utype"].ToString().ToLower() == "instructor")
+            {
+                return RedirectToAction("Details");
+            }
+            var attendences = db.Attendences.Include(a => a.Enrollment).Include(a => a.Instructor).Include(a => a.User);
             return View(attendences.ToList());
         }
 
         // GET: /Attendence/Details/5
         public ActionResult Details(int? id)
         {
+            Attendence attendence = null;
+            if (Session["utype"].ToString().ToLower() == "instructor")
+            {
+                int uid = int.Parse(Session["uid"].ToString());
+                attendence = db.Attendences.FirstOrDefault(x => x.uID == uid);
+                    // db.Instructors.FirstOrDefault(x => x.uID == uid);
+                if (attendence != null)
+                    return View(attendence);
+            }
+            else if (Session["utype"].ToString().ToLower() == "admin")
+            {
+                attendence = db.Attendences.Find(id);;
+                if (attendence!= null)
+                    return View(attendence);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Attendence attendence = db.Attendences.Find(id);
+             
             if (attendence == null)
             {
                 return HttpNotFound();
@@ -39,6 +72,7 @@ namespace ICT_Portal.Controllers
         // GET: /Attendence/Create
         public ActionResult Create()
         {
+            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status");
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
             return View();
@@ -58,6 +92,7 @@ namespace ICT_Portal.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status", attendence.enrollmentID);
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName", attendence.uID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", attendence.uID);
             return View(attendence);
@@ -75,6 +110,7 @@ namespace ICT_Portal.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status", attendence.enrollmentID);
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName", attendence.uID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", attendence.uID);
             return View(attendence);
@@ -93,6 +129,7 @@ namespace ICT_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status", attendence.enrollmentID);
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName", attendence.uID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", attendence.uID);
             return View(attendence);

@@ -23,9 +23,11 @@ namespace ICT_Portal.Models
             this.Departments = new HashSet<Department>();
             this.Enrollments = new HashSet<Enrollment>();
             this.Instructors = new HashSet<Instructor>();
+            this.Instructors1 = new HashSet<Instructor>();
             this.InstructorCourses = new HashSet<InstructorCours>();
             this.Sections = new HashSet<Section>();
             this.Students = new HashSet<Student>();
+            this.Students1 = new HashSet<Student>();
         }
     
         public int UID { get; set; }
@@ -44,8 +46,10 @@ namespace ICT_Portal.Models
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<Instructor> Instructors { get; set; }
+        public virtual ICollection<Instructor> Instructors1 { get; set; }
         public virtual ICollection<InstructorCours> InstructorCourses { get; set; }
         public virtual ICollection<Section> Sections { get; set; }
         public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Student> Students1 { get; set; }
     }
 }
