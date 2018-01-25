@@ -15,51 +15,10 @@ namespace ICT_Portal.Controllers
         private ICTDBLiveEntities db = new ICTDBLiveEntities();
 
         // GET: /Enrollment/
-        public ActionResult Index(int? bid, int? cid, int? sid)
+        public ActionResult Index()
         {
-
-            if (Session["utype"].ToString().ToLower() == "instructor")
-            {
-                //int batch = int.Parse(Session["batch"].ToString());
-                //int course = int.Parse(Session["course"].ToString());
-                //int section = int.Parse(Session["section"].ToString());
-                if (bid != null && cid != null && sid != null)
-                {
-                    int? batch = bid;
-                    int? course = cid;
-                    int? section = sid;
-                    var enrollments = db.Enrollments
-                       .Include(e => e.Batch)
-                       .Include(e => e.Course)
-                       .Include(e => e.Section)
-                       .Include(e => e.Student)
-                       .Include(e => e.User)
-                       .Where(m => m.BatchID == batch
-                              && m.CourseID == course
-                              && m.SectionID == section
-                              );
-                    return View(enrollments.ToList());
-                }
-            }
-            //var allEnrollments = db.Enrollments
-            //   .Include(e => e.Batch)
-            //   .Include(e => e.Course)
-            //   .Include(e => e.Section)
-            //   .Include(e => e.Student)
-            //   .Include(e => e.User);
-            //return View(allEnrollments.ToList());
-
-            else if (Session["utype"].ToString().ToLower() == "admin")
-            {
-                var enrollments = db.Enrollments
-                        .Include(e => e.Batch)
-                        .Include(e => e.Course)
-                        .Include(e => e.Section)
-                        .Include(e => e.Student)
-                        .Include(e => e.User);
-                return View(enrollments.ToList());
-            }
-            return RedirectToAction("Login", "User");
+            var enrollments = db.Enrollments.Include(e => e.InstructorCours).Include(e => e.Student).Include(e => e.User);
+            return View(enrollments.ToList());
         }
 
         // GET: /Enrollment/Details/5
@@ -80,9 +39,7 @@ namespace ICT_Portal.Controllers
         // GET: /Enrollment/Create
         public ActionResult Create()
         {
-            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name");
-            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code");
-            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name");
+            ViewBag.InstructorCoursesID = new SelectList(db.InstructorCourses, "ID", "ClassRoom");
             ViewBag.StudentID = new SelectList(db.Students, "ID", "FirstName");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
             return View();
@@ -93,7 +50,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,SectionID,CourseID,BatchID,StudentID,EnrollmentDate,CreatedOn,ModifiedOn,Status,uID")] Enrollment enrollment)
+        public ActionResult Create([Bind(Include="ID,StudentID,InstructorCoursesID,EnrollmentDate,CreatedOn,ModifiedOn,Status,uID")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -102,9 +59,7 @@ namespace ICT_Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name", enrollment.BatchID);
-            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code", enrollment.CourseID);
-            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name", enrollment.SectionID);
+            ViewBag.InstructorCoursesID = new SelectList(db.InstructorCourses, "ID", "ClassRoom", enrollment.InstructorCoursesID);
             ViewBag.StudentID = new SelectList(db.Students, "ID", "FirstName", enrollment.StudentID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", enrollment.uID);
             return View(enrollment);
@@ -122,9 +77,7 @@ namespace ICT_Portal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name", enrollment.BatchID);
-            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code", enrollment.CourseID);
-            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name", enrollment.SectionID);
+            ViewBag.InstructorCoursesID = new SelectList(db.InstructorCourses, "ID", "ClassRoom", enrollment.InstructorCoursesID);
             ViewBag.StudentID = new SelectList(db.Students, "ID", "FirstName", enrollment.StudentID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", enrollment.uID);
             return View(enrollment);
@@ -135,7 +88,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,SectionID,CourseID,BatchID,StudentID,EnrollmentDate,CreatedOn,ModifiedOn,Status,uID")] Enrollment enrollment)
+        public ActionResult Edit([Bind(Include="ID,StudentID,InstructorCoursesID,EnrollmentDate,CreatedOn,ModifiedOn,Status,uID")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -143,9 +96,7 @@ namespace ICT_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name", enrollment.BatchID);
-            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code", enrollment.CourseID);
-            ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name", enrollment.SectionID);
+            ViewBag.InstructorCoursesID = new SelectList(db.InstructorCourses, "ID", "ClassRoom", enrollment.InstructorCoursesID);
             ViewBag.StudentID = new SelectList(db.Students, "ID", "FirstName", enrollment.StudentID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", enrollment.uID);
             return View(enrollment);

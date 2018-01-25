@@ -39,7 +39,7 @@ namespace ICT_Portal.Controllers
         // GET: /Assessment/Create
         public ActionResult Create()
         {
-            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status");
+            ViewBag.EnrollmentID = new SelectList(db.Enrollments, "ID", "Status");
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
             return View();
@@ -50,7 +50,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,uID,enrollmentID,A1_Max,A1_Obt,A2_Max,A2_Obt,A3_Max,A3_Obt,A4_Max,A4_Obt,A5_Max,A5_Obt,Q1_Max,Q1_Obt,Q2_Max,Q2_Obt,Q3_Max,Q3_Obt,Mid_Max,Mid_Obt,SendUp_Max,SendUp_Obt,Final_Max,Final_Obt,CreatedOn,ModifiedOn")] Assessment assessment)
+        public ActionResult Create([Bind(Include="ID,uID,EnrollmentID,A1_Max,A1_Obt,A2_Max,A2_Obt,A3_Max,A3_Obt,A4_Max,A4_Obt,A5_Max,A5_Obt,Q1_Max,Q1_Obt,Q2_Max,Q2_Obt,Q3_Max,Q3_Obt,Mid_Max,Mid_Obt,SendUp_Max,SendUp_Obt,Final_Max,Final_Obt,CreatedOn,ModifiedOn")] Assessment assessment)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace ICT_Portal.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.enrollmentID);
+            ViewBag.EnrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.EnrollmentID);
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName", assessment.uID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", assessment.uID);
             return View(assessment);
@@ -77,7 +77,7 @@ namespace ICT_Portal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.enrollmentID);
+            ViewBag.EnrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.EnrollmentID);
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName", assessment.uID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", assessment.uID);
             return View(assessment);
@@ -88,7 +88,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,uID,enrollmentID,A1_Max,A1_Obt,A2_Max,A2_Obt,A3_Max,A3_Obt,A4_Max,A4_Obt,A5_Max,A5_Obt,Q1_Max,Q1_Obt,Q2_Max,Q2_Obt,Q3_Max,Q3_Obt,Mid_Max,Mid_Obt,SendUp_Max,SendUp_Obt,Final_Max,Final_Obt,CreatedOn,ModifiedOn")] Assessment assessment)
+        public ActionResult Edit([Bind(Include="ID,uID,EnrollmentID,A1_Max,A1_Obt,A2_Max,A2_Obt,A3_Max,A3_Obt,A4_Max,A4_Obt,A5_Max,A5_Obt,Q1_Max,Q1_Obt,Q2_Max,Q2_Obt,Q3_Max,Q3_Obt,Mid_Max,Mid_Obt,SendUp_Max,SendUp_Obt,Final_Max,Final_Obt,CreatedOn,ModifiedOn")] Assessment assessment)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace ICT_Portal.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.enrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.enrollmentID);
+            ViewBag.EnrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.EnrollmentID);
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName", assessment.uID);
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName", assessment.uID);
             return View(assessment);

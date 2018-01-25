@@ -17,6 +17,14 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ClassRoom, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ClassRoom)
+                @Html.ValidationMessageFor(model => model.ClassRoom)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.SectionID, "SectionID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("SectionID", String.Empty)
@@ -33,6 +41,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.CourseID, "CourseID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CourseID", String.Empty)
+                @Html.ValidationMessageFor(model => model.CourseID)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.BatchID, "BatchID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("BatchID", String.Empty)
@@ -41,10 +57,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CourseID, "CourseID", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Room, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CourseID", String.Empty)
-                @Html.ValidationMessageFor(model => model.CourseID)
+                @Html.EditorFor(model => model.Room)
+                @Html.ValidationMessageFor(model => model.Room)
             </div>
         </div>
 

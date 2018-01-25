@@ -13,7 +13,6 @@ namespace ICT_Portal.Controllers
     public class InstructorCoursController : Controller
     {
         private ICTDBLiveEntities db = new ICTDBLiveEntities();
-
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             // Check Session
@@ -28,10 +27,12 @@ namespace ICT_Portal.Controllers
             }
         }
 
+
         // GET: /InstructorCours/
         public ActionResult Index()
         {
-            if (Session["utype"].ToString().ToLower() == "instructor") {
+            if (Session["utype"].ToString().ToLower() == "instructor")
+            {
                 int uid = int.Parse(Session["uid"].ToString());
                 var instructorcourses = db.InstructorCourses
                     .Include(i => i.Batch)
@@ -39,7 +40,7 @@ namespace ICT_Portal.Controllers
                     .Include(i => i.Instructor)
                     .Include(i => i.Section)
                     .Include(i => i.User)
-                    .Where(m =>m.uID == uid && m.Batch.Status.ToLower() == "active");
+                    .Where(m => m.uID == uid && m.Batch.Status.ToLower() == "active");
                 //Session["batch"] = instructorcourses.SingleOrDefault().BatchID;
                 //Session["section"] = instructorcourses.SingleOrDefault().SectionID;
                 //Session["course"] = instructorcourses.SingleOrDefault().CourseID;
@@ -58,6 +59,9 @@ namespace ICT_Portal.Controllers
             }
             return RedirectToAction("Login", "User");
         }
+
+
+
 
         // GET: /InstructorCours/Details/5
         public ActionResult Details(int? id)
@@ -90,7 +94,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,SectionID,InstructorID,BatchID,CourseID,CreatedOn,ModifiedOn,uID")] InstructorCours instructorcours)
+        public ActionResult Create([Bind(Include = "ID,ClassRoom,SectionID,InstructorID,CourseID,BatchID,CreatedOn,ModifiedOn,Room,uID")] InstructorCours instructorcours)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +136,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,SectionID,InstructorID,BatchID,CourseID,CreatedOn,ModifiedOn,uID")] InstructorCours instructorcours)
+        public ActionResult Edit([Bind(Include = "ID,ClassRoom,SectionID,InstructorID,CourseID,BatchID,CreatedOn,ModifiedOn,Room,uID")] InstructorCours instructorcours)
         {
             if (ModelState.IsValid)
             {

@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f4b32eee31ce42d691b814399a7a9422" Name="Diagram1" ZoomLevel="57">
-        <EntityTypeShape EntityType="ICTDBLiveModel.Assessment" Width="1.5" PointX="6" PointY="20.5" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Attendence" Width="1.5" PointX="3" PointY="21" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Batch" Width="1.5" PointX="3" PointY="33.25" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Course" Width="1.5" PointX="3" PointY="26" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Department" Width="1.5" PointX="3" PointY="43.125" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Enrollment" Width="1.5" PointX="5.25" PointY="32.75" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Instructor" Width="1.5" PointX="8.25" PointY="29.875" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.InstructorCours" Width="1.5" PointX="5.25" PointY="28.125" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Section" Width="1.5" PointX="3" PointY="29.875" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.Student" Width="1.5" PointX="3" PointY="37.125" />
-        <EntityTypeShape EntityType="ICTDBLiveModel.User" Width="1.5" PointX="0.75" PointY="21.375" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Assessment" Width="1.5" PointX="3" PointY="15.75" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Attendence" Width="1.5" PointX="6" PointY="19.375" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Batch" Width="1.5" PointX="3" PointY="36.125" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Course" Width="1.5" PointX="3" PointY="39.75" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Department" Width="1.5" PointX="3" PointY="32.75" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Enrollment" Width="1.5" PointX="9.75" PointY="24" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Instructor" Width="1.5" PointX="5.25" PointY="24.375" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.InstructorCours" Width="1.5" PointX="7.5" PointY="28.625" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Section" Width="1.5" PointX="3" PointY="29.625" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.Student" Width="1.5" PointX="3" PointY="23.625" />
+        <EntityTypeShape EntityType="ICTDBLiveModel.User" Width="1.5" PointX="0.75" PointY="18.75" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Assessment_Enrollment" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Assessment_Instructor" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Assessment_User" />
@@ -23,14 +23,12 @@
         <AssociationConnector Association="ICTDBLiveModel.FK_Attendence_Instructor" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Attendence_User" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Batch_User" />
-        <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_Batch" />
         <AssociationConnector Association="ICTDBLiveModel.FK_InstructorCourses_Batch" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Course_User" />
         <AssociationConnector Association="ICTDBLiveModel.FK_InstructorCourses_Course" />
-        <AssociationConnector Association="ICTDBLiveModel.FK_StudentCourses_Course" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Department_User" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Instructor_Department" />
-        <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_Section" />
+        <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_InstructorCourses" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_Student" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Enrollment_User" />
         <AssociationConnector Association="ICTDBLiveModel.FK_Instructor_User" />

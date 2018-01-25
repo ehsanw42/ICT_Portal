@@ -17,7 +17,6 @@ namespace ICT_Portal.Models
         public Course()
         {
             this.InstructorCourses = new HashSet<InstructorCours>();
-            this.Enrollments = new HashSet<Enrollment>();
         }
     
         public int ID { get; set; }
@@ -31,6 +30,5 @@ namespace ICT_Portal.Models
     
         public virtual User User { get; set; }
         public virtual ICollection<InstructorCours> InstructorCourses { get; set; }
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
     }
 }

@@ -52,10 +52,12 @@ namespace ICT_Portal.Models
         public partial class Instructor
         {
             [NotMapped]
+            [ScaffoldColumn(false)]
             [Required(ErrorMessage = "Please Specify Username")]
             [Display(Name = "User Name")]
             public string Username { get; set; }
             [NotMapped]
+            [ScaffoldColumn(false)]
             [Required(ErrorMessage = "Please Specify Password")]
             [DataType(DataType.Password)]
             public string Password { get; set; }

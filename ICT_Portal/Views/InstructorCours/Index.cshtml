@@ -1,45 +1,36 @@
 ﻿@model IEnumerable<ICT_Portal.Models.InstructorCours>
-           
 
 @{
     ViewBag.Title = "Index";
 }
 
-@if (Session["utype"].ToString().ToLower() == "instructor") 
-{ 
- <p class="col-md-offset-4"> Instructor @Session["username"].ToString()</p>
-}
+<h2>Index</h2>
 
-@if (Session["utype"].ToString().ToLower() == "admin")
-{ 
-    @Html.ActionLink("Create New", "Create");
-}
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @*@Html.DisplayNameFor(model => model.Batch.Name)*@
-            <p>Batch</p>
+            @Html.DisplayNameFor(model => model.ClassRoom)
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Course.Code)*@
-            <p>Courses</p>
+            @Html.DisplayNameFor(model => model.Room)
         </th>
         <th>
-            @if(Session["utype"].ToString().ToLower() == "admin"){
-            @*@Html.DisplayNameFor(model => model.Instructor.FirstName)*@
-            <p>Instructor</p>
-            }
+            @Html.DisplayNameFor(model => model.Batch.Name)
         </th>
         <th>
-            @*@Html.DisplayNameFor(model => model.Section.Name)*@
-            <p>Section</p>
+            @Html.DisplayNameFor(model => model.Course.Code)
         </th>
         <th>
-            @if(Session["utype"].ToString().ToLower() == "admin")
-            {
+            @Html.DisplayNameFor(model => model.Instructor.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Section.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.User.UserName)
-             }
         </th>
         <th></th>
     </tr>
@@ -47,34 +38,30 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.ClassRoom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Room)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Batch.Name)
         </td>
         <td>
-            @Html.ActionLink(item.Course.Title, "Index", "Enrollment", new { bid = item.BatchID, cid = item.CourseID, sid = item.SectionID }, null)
-            @*@Html.DisplayFor(modelItem => item.Course.Title)*@
+            @Html.DisplayFor(modelItem => item.Course.Code)
         </td>
         <td>
-            @if(Session["utype"].ToString().ToLower() == "admin")
-            {
             @Html.DisplayFor(modelItem => item.Instructor.FirstName)
-            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Section.Name)
         </td>
         <td>
-            @if (Session["utype"].ToString().ToLower() == "admin")
-            {
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            }
-            
+            @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
         <td>
-            @if(Session["utype"].ToString().ToLower() == "admin"){
-            <p>@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })</p>
-            }
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

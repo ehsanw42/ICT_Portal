@@ -16,7 +16,7 @@ namespace ICT_Portal.Models
     {
         public int ID { get; set; }
         public Nullable<int> uID { get; set; }
-        public Nullable<int> enrollmentID { get; set; }
+        public Nullable<int> EnrollmentID { get; set; }
         public Nullable<int> A1_Max { get; set; }
         public Nullable<double> A1_Obt { get; set; }
         public Nullable<int> A2_Max { get; set; }

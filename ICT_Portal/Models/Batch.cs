@@ -16,7 +16,6 @@ namespace ICT_Portal.Models
     {
         public Batch()
         {
-            this.Enrollments = new HashSet<Enrollment>();
             this.InstructorCourses = new HashSet<InstructorCours>();
         }
     
@@ -30,7 +29,6 @@ namespace ICT_Portal.Models
         public Nullable<int> uID { get; set; }
     
         public virtual User User { get; set; }
-        public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<InstructorCours> InstructorCourses { get; set; }
     }
 }

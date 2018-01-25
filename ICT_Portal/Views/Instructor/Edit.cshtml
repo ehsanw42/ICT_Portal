@@ -7,7 +7,7 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm("Edit", "Instructor", FormMethod.Post, new {@enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Instructor", FormMethod.Post, new { @enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -16,14 +16,6 @@
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.uID, "uID", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("uID", String.Empty)
-                @Html.ValidationMessageFor(model => model.uID)
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, new { @class = "control-label col-md-2" })
@@ -191,38 +183,6 @@
                 @*@Html.EditorFor(model => model.Photo)*@
                 <input type="file" name="image" id="image" />
                 @Html.ValidationMessageFor(model => model.Photo)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Status)
-                @Html.ValidationMessageFor(model => model.Status)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedOn, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedOn)
-                @Html.ValidationMessageFor(model => model.CreatedOn)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ModifiedBy, "ModifiedBy", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ModifiedBy", String.Empty)
-                @Html.ValidationMessageFor(model => model.ModifiedBy)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ModifiedOn, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ModifiedOn)
-                @Html.ValidationMessageFor(model => model.ModifiedOn)
             </div>
         </div>
 

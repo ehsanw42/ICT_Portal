@@ -32,7 +32,7 @@ namespace ICT_Portal.Models
         [ScaffoldColumn(false)]
         public Nullable<int> uID;
         [ScaffoldColumn(false)]
-        public Nullable<int> enrollmentID;
+        public Nullable<int> EnrollmentID;
         [Display(Name = "Assignment 1 Max Marks")]
         public Nullable<int> A1_Max;
         [Display(Name = "Assignment 1 Obtained Marks")]
@@ -134,12 +134,8 @@ namespace ICT_Portal.Models
 
     public class EnrollmentMetadata
     {
-        [Display(Name = "Section")]
-        public Nullable<int> SectionID;
-        [Display(Name = "Course")]
-        public Nullable<int> CourseID;
-        [Display(Name = "Batch")]
-        public Nullable<int> BatchID;
+        [Display(Name = "Class")]
+        public Nullable<int> InstructorCoursesID { get; set; }
         [Display(Name = "Student Name")]
         public Nullable<int> StudentID;
         [DataType(DataType.Date)]
@@ -202,7 +198,7 @@ namespace ICT_Portal.Models
         [Display(Name = "Resignation Date")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> ResignationDate;
-        [DataType(DataType.Upload)]
+        //[DataType(DataType.Upload)]
         public byte[] Photo;
         [ScaffoldColumn(false)]
         public Nullable<int> ModifiedBy;

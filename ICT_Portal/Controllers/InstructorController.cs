@@ -158,7 +158,7 @@ namespace ICT_Portal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,DateOfBirth,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,ResignationDate,Photo,Status,CreatedOn,ModifiedBy,ModifiedOn")] Instructor instructor, HttpPostedFileBase image)
-        public ActionResult Edit(Instructor instructor, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,DateOfBirth,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,Status")] Instructor instructor, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
