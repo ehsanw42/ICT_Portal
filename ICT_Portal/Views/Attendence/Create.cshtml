@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Attendence</h4>
         <hr />
@@ -20,6 +20,21 @@
             @Html.LabelFor(model => model.EnrollmentID, "EnrollmentID", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("EnrollmentID", String.Empty)
+                @Html.ValidationMessageFor(model => model.EnrollmentID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            Course
+            <div class="col-md-10">
+                @Html.DropDownList("Courseslist", (IEnumerable<SelectListItem>)ViewBag.CoursesList, null, new { @class = "form-control" })
+                @*@Html.ValidationMessageFor(model => model.EnrollmentID)*@
+            </div>
+        </div>
+        <div class="form-group">
+            Course
+            <div class="col-md-10">
+                @Html.DropDownList("Sectionlist", (IEnumerable<SelectListItem>)ViewBag.SectionList, null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.EnrollmentID)
             </div>
         </div>

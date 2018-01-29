@@ -132,7 +132,7 @@ namespace ICT_Portal.Controllers
                 //Update Password if Current and New Password are Same
                 User obj = db.Users.Where(x => x.UPassword == user.UPassword).SingleOrDefault();
 
-                //Do Not Update Database id Current and New Password are Same
+                //Do Not Update Database if Current and New Password are Same
                 if (obj != null)
                 {
                     if (obj.UPassword != user.RePassword)

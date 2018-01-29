@@ -327,7 +327,7 @@
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\Instructor\Create.cshtml" />
     <Content Include="Views\Instructor\Delete.cshtml" />
-    <Content Include="Views\Instructor\Details.cshtml" />
+    <Content Include="Views\Instructor\Details_Old.cshtml" />
     <Content Include="Views\Instructor\Edit.cshtml" />
     <Content Include="Views\Instructor\Index.cshtml" />
     <Content Include="Views\Attendence\Create.cshtml" />
@@ -350,6 +350,7 @@
     <Content Include="Views\InstructorCours\Details.cshtml" />
     <Content Include="Views\InstructorCours\Edit.cshtml" />
     <Content Include="Views\InstructorCours\Index.cshtml" />
+    <Content Include="Views\Instructor\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

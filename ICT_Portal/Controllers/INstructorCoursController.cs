@@ -40,7 +40,7 @@ namespace ICT_Portal.Controllers
                     .Include(i => i.Instructor)
                     .Include(i => i.Section)
                     .Include(i => i.User)
-                    .Where(m => m.uID == uid && m.Batch.Status.ToLower() == "active");
+                    .Where(m => m.Instructor.User.UID == uid && m.Batch.Status.ToLower() == "active");
                 //Session["batch"] = instructorcourses.SingleOrDefault().BatchID;
                 //Session["section"] = instructorcourses.SingleOrDefault().SectionID;
                 //Session["course"] = instructorcourses.SingleOrDefault().CourseID;
@@ -82,7 +82,7 @@ namespace ICT_Portal.Controllers
         public ActionResult Create()
         {
             ViewBag.BatchID = new SelectList(db.Batches, "ID", "Name");
-            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Code");
+            ViewBag.CourseID = new SelectList(db.Courses, "ID", "Title");
             ViewBag.InstructorID = new SelectList(db.Instructors, "ID", "FirstName");
             ViewBag.SectionID = new SelectList(db.Sections, "ID", "Name");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");

@@ -175,6 +175,7 @@ namespace ICT_Portal.Models
         [EnumDataType(typeof(Post))]
         public string DeptPosition;
         [Display(Name = "Mobile")]
+        [RegularExpression("^+92-3[0-9+]{2}-[0-9+]{7}$", ErrorMessage = "Enter a Valid Mobile Number sa +92-300-0000000")]
         public string MobileNo;
         [Display(Name = "Phone")]
         public string PhoneNo;
@@ -194,6 +195,7 @@ namespace ICT_Portal.Models
         public Nullable<int> ExperienceMonth;
         [Display(Name = "Joining Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd MMMM, yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> JoiningDate;
         [Display(Name = "Resignation Date")]
         [DataType(DataType.Date)]
@@ -358,4 +360,5 @@ namespace ICT_Portal.Models
     public enum Status {Active, Finished}
     // Enum to be used as Session String
     public enum SessionRole { Admin, Instructor, Student }
+    public enum AssessmentType { Assignment1, Assignment2, Assignment3, Assignment4, Assignment5, Quiz1, Quiz2, Quiz3, MidTerm, Sendup, Final }
 }

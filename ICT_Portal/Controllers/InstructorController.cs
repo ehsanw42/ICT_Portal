@@ -129,6 +129,8 @@ namespace ICT_Portal.Controllers
                     ViewBag.uID = new SelectList(db.Users, "UID", "UserName", ins.uID);
                     ViewBag.DeptID = new SelectList(db.Departments, "ID", "Name", ins.DeptID);
                     ViewBag.ModifiedBy = new SelectList(db.Users, "UID", "UserName", ins.ModifiedBy);
+                    ins.Username = ins.User.UserName;
+                    ins.Password = ins.User.UPassword;
                     return View(ins);
                 }
             }
@@ -149,6 +151,8 @@ namespace ICT_Portal.Controllers
             }
 
             Instructor instructor = db.Instructors.Find(id);
+            instructor.Username = instructor.User.UserName;
+            instructor.Password = instructor.User.UPassword;
             return View(instructor);
         }
 
@@ -158,7 +162,7 @@ namespace ICT_Portal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,DateOfBirth,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,ResignationDate,Photo,Status,CreatedOn,ModifiedBy,ModifiedOn")] Instructor instructor, HttpPostedFileBase image)
-        public ActionResult Edit([Bind(Include="ID,uID,FirstName,LastName,FatherName,CNIC,DateOfBirth,Gender,Designation,DeptID,Email,DeptPosition,MobileNo,PhoneNo,PresentAddress,PermanentAddress,PresentCity,PermanentCity,ExperienceYear,ExperienceMonth,JoiningDate,Status")] Instructor instructor, HttpPostedFileBase image)
+        public ActionResult Edit(Instructor instructor, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {

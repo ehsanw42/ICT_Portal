@@ -6,9 +6,9 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
 <table class="table">
     <tr>
         <th>
@@ -18,16 +18,19 @@
             @Html.DisplayNameFor(model => model.Room)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Batch.Name)
+            @*@Html.DisplayNameFor(model => model.Batch.Name)*@
+            <p>Batch</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Course.Code)
+            @*@Html.DisplayNameFor(model => model.Course.Title)*@
+            <p>Course</p>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Instructor.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Section.Name)
+            @*@Html.DisplayNameFor(model => model.Section.Name)*@
+            <p>Section</p>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.User.UserName)
@@ -47,7 +50,7 @@
             @Html.DisplayFor(modelItem => item.Batch.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Course.Code)
+            @Html.DisplayFor(modelItem => item.Course.Title)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Instructor.FirstName)
@@ -59,8 +62,8 @@
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Add/Modify Marks", "Create", "Assessment", new { bid = item.BatchID, cid = item.CourseID, sid = item.SectionID }, null) |
+            @Html.ActionLink("View Marks", "Index", "Assessment", new { bid = item.BatchID, cid = item.CourseID, sid = item.SectionID }, null) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>

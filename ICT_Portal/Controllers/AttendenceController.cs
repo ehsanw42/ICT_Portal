@@ -44,6 +44,34 @@ namespace ICT_Portal.Controllers
         // GET: /Attendence/Create
         public ActionResult Create()
         {
+            ViewBag.CoursesList = new SelectList((from InstructorCourses in db.InstructorCourses
+                                                  where
+                                                    InstructorCourses.Instructor.uID == int.Parse(Session["uid"].ToString())
+                                                    &&
+                                                    InstructorCourses.Batch.Status == "Active"
+                                                  select new
+                                                  {
+                                                      InstructorCourses.Course.ID,
+                                                      InstructorCourses.Course.Code,
+                                                      InstructorCourses.Course.Title,
+                                                      InstructorCourses.Course.Description,
+                                                      InstructorCourses.Course.CreaditHours,
+                                                      CreatedOn = (DateTime?)InstructorCourses.Course.CreatedOn,
+                                                      ModifiedOn = (DateTime?)InstructorCourses.Course.ModifiedOn,
+                                                      uID = (int?)InstructorCourses.Course.uID
+                                                  }), "ID", "Title");
+            ViewBag.SectionList = new SelectList((from InstructorCourses in db.InstructorCourses
+                                                  where InstructorCourses.Instructor.uID == int.Parse(Session["uid"].ToString()) 
+                                                  && InstructorCourses.Batch.Status == "Active"
+                                                  select new
+                                                  {
+                                                      InstructorCourses.Section.ID,
+                                                      InstructorCourses.Section.Name,
+                                                      ModifiedOn = (DateTime?)InstructorCourses.Section.ModifiedOn,
+                                                      CreatedOn = (DateTime?)InstructorCourses.Section.CreatedOn,
+                                                      uID = (int?)InstructorCourses.Section.uID
+                                                  }).Distinct(), "ID", "Name");
+            
             ViewBag.EnrollmentID = new SelectList(db.Enrollments, "ID", "Status");
             ViewBag.uID = new SelectList(db.Instructors, "ID", "FirstName");
             ViewBag.uID = new SelectList(db.Users, "UID", "UserName");
@@ -55,8 +83,10 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,EnrollmentID,uID,ClassRoom,Status,EntryDate,FromTime,ToTime,ModifiedOn,CreatedOn,TopicsCovered")] Attendence attendence)
+        public ActionResult Create(Attendence attendence)
         {
+            int SelectedCourse = int.Parse(Request.Form["Courselist"]);
+            int SelectedSection = int.Parse(Request.Form["Sectionlist"]);
             if (ModelState.IsValid)
             {
                 db.Attendences.Add(attendence);

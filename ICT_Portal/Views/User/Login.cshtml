@@ -10,7 +10,7 @@
 </head>
 <body>
     @*@using (Html.BeginForm("Login", "User", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post))*@
-    @using (Html.BeginForm())    
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
