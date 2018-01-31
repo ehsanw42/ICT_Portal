@@ -209,18 +209,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Assessment_Instructor">
-          <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
-          <End Role="Assessment" Type="Self.Assessment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Instructor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Assessment">
-              <PropertyRef Name="uID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Assessment_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Assessment" Type="Self.Assessment" Multiplicity="*" />
@@ -487,10 +475,6 @@
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Assessment_Enrollment" Association="Self.FK_Assessment_Enrollment">
             <End Role="Enrollment" EntitySet="Enrollment" />
-            <End Role="Assessment" EntitySet="Assessment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Assessment_Instructor" Association="Self.FK_Assessment_Instructor">
-            <End Role="Instructor" EntitySet="Instructor" />
             <End Role="Assessment" EntitySet="Assessment" />
           </AssociationSet>
           <AssociationSet Name="FK_Assessment_User" Association="Self.FK_Assessment_User">

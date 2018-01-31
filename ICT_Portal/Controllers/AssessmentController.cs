@@ -17,7 +17,7 @@ namespace ICT_Portal.Controllers
         // GET: /Assessment/
         public ActionResult Index(int? bid, int? cid, int? sid)
         {
-            IEnumerable<Assessment> assessments = this.GetAssessments( bid, cid, sid);
+            IEnumerable<Assessment> assessments = this.GetAssessments(bid, cid, sid);
             if (assessments != null)
                 return View(assessments.ToList());
             return View();
@@ -28,29 +28,37 @@ namespace ICT_Portal.Controllers
 
         private IEnumerable<Assessment> GetAssessments(int? bid, int? cid, int? sid)
         {
-            // Select a course for adding marks
-            var r = db.InstructorCourses.Where(x => x.InstructorID == 7
-                                       && x.BatchID == bid && x.SectionID == sid && x.CourseID == cid);
-
-            InstructorCours instCourse = null;
-            if (r.Count() > 0)
+            if (Session["utype"].ToString().ToLower() == "instructor")
             {
-                instCourse = r.ToList()[0];
-                //instCourse.ClassRoom
-            }
-            // proceed only if a course is assigned to instructor
-            IEnumerable<Assessment> assessments = null;
-            if (instCourse != null)
-            {
-                // Get enrollments for filtered batch, section and course
-                var enr = db.Enrollments.Where(x => x.InstructorCoursesID == instCourse.ID);
+                int uid = int.Parse(Session["uid"].ToString());
+                // Select a course for adding marks
+                var r = db.InstructorCourses.Where(x => x.Instructor.User.UID == uid
+                                                        && x.BatchID == bid 
+                                                        && x.SectionID == sid 
+                                                        && x.CourseID == cid
+                                                   );
 
-                if (enr.Count() > 0)
+                InstructorCours instCourse = null;
+                if (r.Count() > 0)
                 {
-                    assessments = db.Assessments.Where(x => enr.Any(eid => eid.ID == x.EnrollmentID));
-                    return assessments.ToList();
+                    instCourse = r.ToList()[0];
+                    //instCourse.ClassRoom
+                }
+                // proceed only if a course is assigned to instructor
+                IEnumerable<Assessment> assessments = null;
+                if (instCourse != null)
+                {
+                    // Get enrollments for filtered batch, section and course
+                    var enr = db.Enrollments.Where(x => x.InstructorCoursesID == instCourse.ID);
+
+                    if (enr.Count() > 0)
+                    {
+                        assessments = db.Assessments.Where(x => enr.Any(eid => eid.ID == x.EnrollmentID));
+                        return assessments.ToList();
+                    }
                 }
             }
+            
             return null;
         }
 
@@ -102,7 +110,7 @@ namespace ICT_Portal.Controllers
 
                 //db.Assessments.Add(assessment);
                 db.SaveChanges();
-                return RedirectToAction("Index", routeValues: new { bid , cid, sid });
+                return RedirectToAction("Index", routeValues: new { bid, cid, sid });
             }
 
             //ViewBag.EnrollmentID = new SelectList(db.Enrollments, "ID", "Status", assessment.EnrollmentID);
@@ -134,7 +142,7 @@ namespace ICT_Portal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,uID,EnrollmentID,A1_Max,A1_Obt,A2_Max,A2_Obt,A3_Max,A3_Obt,A4_Max,A4_Obt,A5_Max,A5_Obt,Q1_Max,Q1_Obt,Q2_Max,Q2_Obt,Q3_Max,Q3_Obt,Mid_Max,Mid_Obt,SendUp_Max,SendUp_Obt,Final_Max,Final_Obt,CreatedOn,ModifiedOn")] Assessment assessment)
+        public ActionResult Edit([Bind(Include = "ID,uID,EnrollmentID,A1_Max,A1_Obt,A2_Max,A2_Obt,A3_Max,A3_Obt,A4_Max,A4_Obt,A5_Max,A5_Obt,Q1_Max,Q1_Obt,Q2_Max,Q2_Obt,Q3_Max,Q3_Obt,Mid_Max,Mid_Obt,SendUp_Max,SendUp_Obt,Final_Max,Final_Obt,CreatedOn,ModifiedOn")] Assessment assessment)
         {
             if (ModelState.IsValid)
             {

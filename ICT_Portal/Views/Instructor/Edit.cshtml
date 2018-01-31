@@ -106,6 +106,7 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Designation:</label>
                         <div class="col-md-10">
+                            @*@Html.DropDownListFor(model => model.Designation, new {@class = "form-control" })*@
                             @Html.TextBoxFor(model => model.Designation, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Designation)
                         </div>
